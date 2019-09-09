@@ -45,7 +45,7 @@ def train(run_id: str, clean_data_root: Path, models_dir: Path, umap_every: int,
     if not force_restart:
         if state_fpath.exists():
             print("Found existing model \"%s\", loading it and resuming training." % run_id)
-            checkpoint = torch.load(state_fpath)
+            checkpoint = torch.load(state_fpath, map_location=torch.device('cpu'))
             init_step = checkpoint["step"]
             model.load_state_dict(checkpoint["model_state"])
             optimizer.load_state_dict(checkpoint["optimizer_state"])
